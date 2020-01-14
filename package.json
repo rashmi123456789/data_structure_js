@@ -1,4 +1,5 @@
 ﻿{
 "name": "@data_structure_js/dsa",
-"version": "1.0.0"
+"version": "1.0.0",
+"main": "index.js"
 }
