@@ -1,5 +1,8 @@
 ﻿{
 "name": "@data_structure_js/dsa",
 "version": "1.0.0",
-"main": "index.js"
+"main": "index.js",
+"license": "MIT",
+"repository": "rashmi123456789/data_structure_js",
+
 }
