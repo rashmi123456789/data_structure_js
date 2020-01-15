@@ -1,3 +1,5 @@
-exports.printMsg = function() {
-    console.log("This is a message from the demo package");
+import stack from './stack/stack';
+
+export{
+    stack,
 }
