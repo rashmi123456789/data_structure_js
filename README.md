@@ -11,4 +11,15 @@ npm install @data_structure_js/dsa
 
 <h2>Usage</h2>
 
-<code>const dsa = require('@data_structure_js/dsa')</code>
+<code>
+const dsa = require('@data_structure_js/dsa');
+
+var stack= new dsa.stack();
+<br>
+var queue = new dsa.queue();
+
+stack.push(1);
+
+console.log(stack.printStack());
+
+</code>
