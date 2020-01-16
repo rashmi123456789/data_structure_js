@@ -90,6 +90,3 @@ class stack {
     }
 }
 module.exports = stack;
-
-
-
