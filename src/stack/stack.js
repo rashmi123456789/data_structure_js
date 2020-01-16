@@ -1,11 +1,11 @@
 /**
  *@author rashmi shehana
  * Stack is a linear data structure based on 'First In Last Out' concept.
- * This class includes push, pop, peek, isEmpty, isFull, size, printStack operations.
+ * This class includes push, pop, peek, isEmpty, size, printStack operations.
  * All these operations has O(1) time complexity.
  */
 
- export class stack {
+class stack {
      
     constructor(maxCapaity = undefined){
         this.top = -1;
@@ -23,13 +23,28 @@
         this.top +=1;
     }
 
-    printStack(){
-        this.stack.array.forEach(element => {
-            console.log(element);
-        });
+    printStack(from=0,to=this.stack.length){
+        return this.stack.slice(from,to);
+    }
+
+    isEmpty(){
+        return(this.top === -1);
+    }
+
+    pop(){
+        if(this.isEmpty()){
+            throw Error ('The Stack is Empty, Unable to pop()');
+        }else{
+            this.top -=1;
+            return this.stack.pop();
+        }
+    }
+
+    size(){
+        return this.stack.length;
     }
 }
-
+module.exports = stack;
 
 
 

@@ -1,5 +1,3 @@
-import stack from './stack/stack';
+const stack = require('./src/stack/stack');
 
-export{
-    stack,
-}
+module.exports = stack;

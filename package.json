@@ -1,7 +1,14 @@
-﻿{
-"name": "@data_structure_js/dsa",
-"version": "3.0.0",
-"main": "index.js",
-"license": "MIT",
-"repository": "rashmi123456789/data_structure_js"
+{
+  "name": "@data_structure_js/dsa",
+  "version": "3.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": "rashmi123456789/data_structure_js",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.0.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  }
 }
