@@ -4,6 +4,7 @@ var expect = require('chai').expect;
 
 
 const stack = new Stack();
+const stackWithMaxSize = new Stack(2);
 
 describe('Stack', function() {
 
@@ -62,8 +63,26 @@ describe('Stack', function() {
     });
   });
 
+  describe('isFull()', function() {
+    it('should return true when run isFull() while having maximum number of elements in stack', function() {
+        assert.equal(stack.isFull(),false);
+    });
+  });
 
+  describe('push()', function() {
+    it('should throw an error when push to the stack more than maximum capacity', function() {
+        expect(function(){
+            stackWithMaxSize.push('a');
+            stackWithMaxSize.push('b');
+            stackWithMaxSize.push('c');
+        }).to.throw(Error,'The stack is overflowing.');
+    });
+  });
 
-
-
+  describe('peek()', function() {
+    it('should return topmost elements in stack', function() {
+        assert.equal(stack.peek(),'d');
+    });
+  });
+  
 });
