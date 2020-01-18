@@ -14,7 +14,7 @@ class queue {
      * then the queue doesn't have a maximum capacity and it will dinamically grow.
      */
     constructor(maxCapaity = undefined){
-        this.front = -1;
+        this.front = 0;
         this.rear = -1;
         this.queue = [];
         this.maxSize = maxCapaity;
@@ -45,7 +45,7 @@ class queue {
      * Return a boolean value which indicate the queue is empty or not
      */
     isEmpty(){
-        return(this.front === this.rear);
+        return (this.rear +1 === this.front);
     }
 
     /**
@@ -56,11 +56,6 @@ class queue {
         if(this.isEmpty()){
             throw Error ('The Queue is Empty, Unable to dequeue()');
         }else{
-            if(this.front == -1){
-                const removingElement = this.queue[0];
-                this.front = 0;
-                return removingElement;
-            }
             const removingElement = this.queue[this.front];
             this.front +=1;
             return removingElement;
@@ -71,16 +66,8 @@ class queue {
      * Return the length of the queue
      */
     size(){
-        return this.rear+1;
+    return this.rear-this.front + 1;
     }
-
-    /**
-     * Returns actually filled size in queue
-    */
-   actualSize(){
-    return this.rear-this.front;
-}
-
 
     /**
      * Return a boolean value which indicate the queue is full or not
@@ -98,14 +85,14 @@ class queue {
     /**
      * Return the front element in the queue
      */
-    frontElement(){
+    getFrontElement(){
         return this.queue[this.front];
     }
 
     /**
      * Return the rear element in the queue
      */
-    rearElement(){
+    getRearElement(){
         return this.queue[this.rear];
     }
 
