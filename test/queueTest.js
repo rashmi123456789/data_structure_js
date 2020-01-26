@@ -16,7 +16,7 @@ describe('Queue', function() {
   });
 
   describe('dequeue()', function() {
-    it('should return 1 when pushed element is popped', function() {
+    it('should return 1 whenenqueued element is dequeued', function() {
         assert.equal(queue.dequeue(),1);
         assert.equal(queue.isEmpty(),true);
     });
@@ -90,10 +90,11 @@ describe('Queue', function() {
 
   describe('dequeue()', function() {
     it('should return rear element in queue, size should be 3 and front element should be b', function() {
-        assert.equal(queue.dequeue(),'a');
-        assert.equal(queue.size(),3);
-        assert.equal(queue.getFrontElement(),'b');
-        assert.equal(queue.getRearElement(),'d');
+      assert.equal(queue.size(),4);
+      assert.equal(queue.dequeue(),'a');
+      assert.equal(queue.size(),3);
+      assert.equal(queue.getFrontElement(),'b');
+      assert.equal(queue.getRearElement(),'d');
     });
   });
   

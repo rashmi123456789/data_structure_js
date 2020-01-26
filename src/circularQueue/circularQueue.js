@@ -1,51 +1,54 @@
 /**
  *@author rashmi shehana
- * Queue is a linear data structure based on 'Last In First Out' concept.
+ * Circular Queue is a not a linear data structure. It is based on 'Last In First Out' concept.
  * This class includes enqueue, dequeue, isEmpty, size, isFull, printQueue, getFront, getRear operations.
  * All these operations has O(1) time complexity.
+ * Even though the queue data struture can become full without max number of elements,
+ *  Circular Queue will be not full without maximum amount of elements
+ * If Circular queue is empty, rear is -1 and if queue is full,  rear = front.
  */
 
-class queue {
+class circularQueue {
     
     /**
-     * Constructor of class queue.
-     * @param maxCapaity - Maximum capacity of the queue.
-     *  If maxCapacity is not set when initializing the queue,
-     * then the queue doesn't have a maximum capacity and it will dinamically grow.
+     * Constructor of class circularQueue.
+     * @param maxCapaity - Maximum capacity of the circularQueue.
      */
-    constructor(maxCapaity = undefined){
+    constructor(maxCapaity){
         this.front = -1;
         this.rear = -1;
-        this.queue = [];
+        this.circularQueue = [];
         this.maxSize = maxCapaity;
     }
 
     /**
-     * Adding elements to the end of the queue.
+     * Adding elements to the end of the circularQueue.
      * @param element - element to be added
      */
     enqueue(element) {
-        if (this.maxSize){
-            if(this.rear+1 == this.maxSize){
-                throw Error ('The queue is overflowing.');
-            }
+        if(this.isFull()){
+            throw Error ('The Circular Queue is overflowing.');
         }
-        this.queue[this.rear] =element;
-        this.rear +=1;
+        this.rear = (this.rear + 1) % this.maxSize;
+        this.circularQueue[this.rear] =element;
     }
 
     /**
      * Print the queue elements.
      */
-    printQueue(){
-        return this.queue.slice(this.front,this.rear+1);
+    printCircularQueue(){
+        if(this.front < this.rear){
+            return this.circularQueue.slice(this.front + 1, this.rear +1);
+        }else{
+            return this.circularQueue.slice(this.front+1, this.maxSize) +','+this.circularQueue.slice(0, this.rear + 1);
+        }
     }
 
     /**
      * Return a boolean value which indicate the queue is empty or not
      */
     isEmpty(){
-        return(this.front === this.rear);
+        return(this.rear === -1);
     }
 
     /**
@@ -54,40 +57,68 @@ class queue {
      */
     dequeue(){
         if(this.isEmpty()){
-            throw Error ('The Queue is Empty, Unable to dequeue()');
+            throw Error ('The Circular Queue is Empty, Unable to dequeue()');
         }else{
-            const removingElement = this.queue[this.front];
-            this.front +=1;
-            return removingElement;
+            this.front = (this.front + 1)% this.maxSize;
+            const remove = this.circularQueue[this.front];
+            if(this.rear === this.front){
+                this.reset();
+            }
+            return remove;
         }
     }
 
     /**
-     * Return the length of the queue
+     * Return the length of the Circular Queue
      */
     size(){
-        return this.rear - this.front;
+        if(this.isEmpty()){
+            return 0;
+        }else if(this.rear === this.front){
+            return maxSize;
+        }else if(this.front < this.rear){
+            return(Math.abs(this.front - this.rear));
+        }else{
+            return(this.maxSize - this.front + this.rear);
+        }
     }
 
     /**
-     * Return a boolean value which indicate the queue is full or not
-     * when maxSize is not giving, this method always return false 
+     * Return a boolean value which indicate the Circular Queue is full or not
      */
     isFull(){
-        if(this.maxSize){
-            return this.size() === this.maxSize;
-        }
-        else{
-            return false;
+        return this.size() === this.maxSize;
+    }
+
+    /**
+     * Return the front element in the Circular Queue
+     */
+    getFrontElement(){
+        if(!this.isEmpty()){
+            if(this.front === -1){
+                return this.circularQueue[0];
+            }
+            return this.circularQueue[this.front + 1];
         }
     }
 
     /**
-     * Return the front element in the queue
+     * Return the rear element in the Circular Queue
      */
-    frontElement(){
-        return this.queue[this.front];
+    getRearElement(){
+        if(!this.isEmpty()){
+            return this.circularQueue[this.rear];
+        }
     }
 
+    /**
+     * Reset the Circular Queue
+     */
+    reset(){
+        this.rear = -1;
+        this.front = -1;
+    }
+
+
 }
-module.exports = queue;
+module.exports = circularQueue;
