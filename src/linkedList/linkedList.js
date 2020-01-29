@@ -1,4 +1,4 @@
-import node from './node';
+const node = require('./node');
 /**
  *@author rashmi shehana
  * Linked list is a linear data structure. Items of it cannot be accessed directly.
@@ -11,8 +11,8 @@ class linkedList{
     /**
      * Constructor of class linkedList
      */
-    constructor(){
-        this.head = new node();
+    constructor(data){
+        this.head = new node(data);
     }
 
     getHead(){
@@ -24,29 +24,60 @@ class linkedList{
     }
 
     setNextNode(currentNode,nextNode){
-        currentNode.setNext(nextNode);
+        if(currentNode !== null && nextNode !== null){
+            currentNode.setNext(nextNode);
+        }else{
+            throw Error ('ERROR - Null Node');
+        }
+        
     }
 
     getDataItem(node){
-        return node.getData();
+        if(node !== null){
+            return node.getData();
+        }else{
+            throw Error ('ERROR - Null Node');
+        }
     }
 
     getNextNode(currentNode){
-        return currentNode.getNext();
+        if(currentNode !== null){
+            return currentNode.getNext();
+        }else{
+            throw Error ('ERROR - Null Node');
+        }
     }
 
     hasNext(currentNode){
-        return currentNode.getNext() !== null;
+        if(currentNode !== null){
+            return currentNode.getNext() !== null;
+        }else{
+            throw Error ('ERROR - Null Node');
+        }
     }
 
-    insertNode(currentNode,nextNode){
-        if(this.hasNext(currentNode)){
-            const oldNextNode = this.getNextNode(currentNode);
-            this.setNextNode(currentNode,nextNode);
-            this.setNextNode(nextNode,oldNextNode);
+    insertNode(nextNode,currentNode = null){
+        if(nextNode === null){
+            throw Error ('ERROR - Null Node');
         }else{
-            this.setNextNode(currentNode,nextNode);
+            if(this.head == null){
+                this.head = nextNode;
+            }else{
+                if(currentNode == null){
+                    const oldHead = this.head;
+                    this.head = nextNode;
+                    this.setNextNode(this.head,oldHead);
+                }else if(this.hasNext(currentNode)){
+                    const oldNextNode = this.getNextNode(currentNode);
+                    this.setNextNode(currentNode,nextNode);
+                    this.setNextNode(nextNode,oldNextNode);
+                }else{
+                    this.setNextNode(currentNode,nextNode);
+                }
+            }
+            
         }
+        
     }
 
     deleteNode(nodeToRemove){
@@ -55,12 +86,67 @@ class linkedList{
         let found = false;
         
         while(found === false){
-            if(this.hasNext(currentNode)){
-                nextNode = this.getNextNode(currentNode);
+            if(this.getDataItem(this.head) === this.getDataItem(nodeToRemove)){
+                found = true;
+                if(this.hasNext(this.head)){
+                    this.head = this.getNextNode(this.head);
+                }else{
+                    this.head = null;
+                }
+            }else{
+                if(this.hasNext(currentNode)){
+                    nextNode = this.getNextNode(currentNode);
+                    if(this.getDataItem(nextNode) === this.getDataItem(nodeToRemove)){
+                        found = true;
+                        if(this.hasNext(nextNode)){
+                            this.setNextNode(currentNode,this.getNextNode(nextNode));
+                        }else{
+                            this.setNextNode(currentNode,null);
+                        }
+                    }else{
+                        currentNode = this.getNextNode(currentNode);
+                    }
+                }else{
+                    throw Error ('ERROR - No Such Node to Delete.');
+                }
             }
-            if(this.getDataItem)
         }
     }
 
+    findNode(data){
+        let found = false;
+        let currentNode = this.head;
+        while (found === false){
+            if(this.getDataItem(currentNode) === data){
+                found = true;
+                return currentNode;
+            }else{
+                if(this.hasNext(currentNode)){
+                    currentNode = this.getNextNode(currentNode);
+                }else{
+                    throw Error ('ERROR - No Such Node.');
+                }
+            }
+        }
+    }
 
-};
+    createNewNode(data){
+        const newNode = new node(data);
+        return newNode;
+    }
+
+    size(){
+        let count = 1;
+        if(this.head !== null){
+            let currentNode = this.head;
+            while(this.hasNext(currentNode)){
+                count = count + 1;
+                currentNode = this.getNextNode(currentNode);
+            }
+            return count;
+        }
+        return 0;
+    }
+}
+
+module.exports = linkedList;
