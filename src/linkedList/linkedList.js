@@ -15,14 +15,31 @@ class linkedList{
         this.head = new node(data);
     }
 
+    /**
+     * This method the first node of linked List
+     */
     getHead(){
         return this.head;
     }
 
+    /**
+     * This method sets data item to a node
+     * @param node - node which need to set data
+     * @param data - data item
+     */
     setDataItem(node,data){
-        node.setData(data);
+        if(node !== null){
+            node.setData(data);
+        }else{
+            throw Error ('ERROR - Null Node');
+        }
     }
 
+    /**
+     * This method sets node's 'next' pointer
+     * @param currentNode - new node will be added after this node
+     * @param nextNode  - newly adding node
+     */
     setNextNode(currentNode,nextNode){
         if(currentNode !== null && nextNode !== null){
             currentNode.setNext(nextNode);
@@ -32,6 +49,10 @@ class linkedList{
         
     }
 
+    /**
+     * This method returns the data item of given node.
+     * @param  node - node, which needs to return data item
+     */
     getDataItem(node){
         if(node !== null){
             return node.getData();
@@ -40,6 +61,10 @@ class linkedList{
         }
     }
 
+    /**
+     * Returs the next node of given node
+     * @param currentNode - current node
+     */
     getNextNode(currentNode){
         if(currentNode !== null){
             return currentNode.getNext();
@@ -48,6 +73,10 @@ class linkedList{
         }
     }
 
+    /**
+     * Checks wether there is a node next to any given node
+     * @param  currentNode - current node
+     */
     hasNext(currentNode){
         if(currentNode !== null){
             return currentNode.getNext() !== null;
@@ -56,6 +85,12 @@ class linkedList{
         }
     }
 
+    /**
+     * This method inserts a node after current node. If current node is not given,
+     * new node will be added to front as a head.
+     * @param  nextNode - newly adding node
+     * @param  currentNode - new node will be added after this node
+     */
     insertNode(nextNode,currentNode = null){
         if(nextNode === null){
             throw Error ('ERROR - Null Node');
@@ -80,6 +115,10 @@ class linkedList{
         
     }
 
+    /**
+     * This method removes nodes
+     * @param nodeToRemove  -node to be removed
+     */
     deleteNode(nodeToRemove){
         let currentNode = this.head;
         let nextNode = null;
@@ -113,6 +152,11 @@ class linkedList{
         }
     }
 
+    /**
+     * This method traverse and finds node with given data item and return
+     * If there are multiple occurences of given data item, this method returns first occurrence.
+     * @param data - data item of the node which needs to find.
+     */
     findNode(data){
         let found = false;
         let currentNode = this.head;
@@ -130,11 +174,18 @@ class linkedList{
         }
     }
 
+    /**
+     * Create a new node
+     * @param  data - data item of node
+     */
     createNewNode(data){
         const newNode = new node(data);
         return newNode;
     }
 
+    /**
+     * This returns the length of the linked List
+     */
     size(){
         let count = 1;
         if(this.head !== null){
@@ -148,6 +199,10 @@ class linkedList{
         return 0;
     }
 
+    /**
+     * This method inserts a new node at the end of the linked list.
+     * @param node - new node to be added.
+     */
     insertLast(node){
         if(node == null){
             throw Error ('ERROR - Null Node.');
@@ -164,8 +219,9 @@ class linkedList{
         }
     }
 
-    
-
+    /**
+     * Print the data item of the nodes in linked list from the head node.
+     */
     printNodes(){
         const dataArray = [];
         if(this.head !== null){
