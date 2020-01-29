@@ -147,6 +147,37 @@ class linkedList{
         }
         return 0;
     }
+
+    insertLast(node){
+        if(node == null){
+            throw Error ('ERROR - Null Node.');
+        }else{
+            let currentNode = this.head;
+            if(this.head !== null){
+                while(this.hasNext(currentNode) === true){
+                    currentNode = this.getNextNode(currentNode);
+                }
+                if(this.hasNext(currentNode) === false){
+                    this.insertNode(node,currentNode)
+                }
+            }
+        }
+    }
+
+    
+
+    printNodes(){
+        const dataArray = [];
+        if(this.head !== null){
+            let currentNode = this.head;
+            while(currentNode){
+                dataArray.push(this.getDataItem(currentNode));
+                currentNode = this.getNextNode(currentNode);
+            }
+        }
+        return dataArray;
+    }
 }
+
 
 module.exports = linkedList;

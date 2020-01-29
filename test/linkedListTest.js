@@ -54,4 +54,27 @@ describe('LinkedList', function() {
         });
     });
 
+    describe('printNodes()', function() {
+        it('should return data array', function() {
+            const newNode = linkedList.createNewNode(4);
+            linkedList.insertNode(newNode);
+            const newNode1 = linkedList.createNewNode(5);
+            linkedList.insertNode(newNode1);
+            assert.equal(linkedList.size(),3);
+            assert.deepEqual(linkedList.printNodes(),[5,4,3]);
+        });
+    });
+
+    describe('insertLast() and printNodes()', function() {
+        it('should return data array', function() {
+            const newNode = linkedList.createNewNode(6);
+            const find5 = linkedList.findNode(5);
+            linkedList.insertNode(newNode,find5);
+            const newNode1 = linkedList.createNewNode(7);
+            linkedList.insertLast(newNode1);
+            assert.equal(linkedList.size(),5);
+            assert.deepEqual(linkedList.printNodes(),[5,6,4,3,7]);
+        });
+    });
+
 });
