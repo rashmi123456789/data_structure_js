@@ -2,7 +2,7 @@ const node = require('./node');
 /**
  *@author rashmi shehana
  * Linked list is a linear data structure. Items of it cannot be accessed directly.
- * Always It should start from head of the linked list and traverser. 
+ * Always It should start from head of the linked list and traverse. 
  * The time compelxity is O(n) for traversing.
  */
 
@@ -16,7 +16,7 @@ class linkedList{
     }
 
     /**
-     * This method the first node of linked List
+     * This method returns the first node of linked List
      */
     getHead(){
         return this.head;
@@ -37,7 +37,7 @@ class linkedList{
 
     /**
      * This method sets node's 'next' pointer
-     * @param currentNode - new node will be added after this node
+     * @param currentNode - current node
      * @param nextNode  - newly adding node
      */
     setNextNode(currentNode,nextNode){
