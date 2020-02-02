@@ -63,7 +63,7 @@ class doublyLinkedList{
      * @param prevNode  - newly adding node
      */
     setPrevNode(currentNode,prevNode){
-        if(currentNode !== null && prevNode !== null){
+        if(currentNode !== null ){
             currentNode.setPrev(prevNode);
         }else{
             throw Error ('ERROR - Null Node');
@@ -164,7 +164,6 @@ class doublyLinkedList{
             throw Error ('ERROR - Null Node');
         }else{
             if(this.hasNext(currentNode) === false){
-                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>true");
                 this.insertTail(newNode);
             }else{
                 const nextToCurrent = this.getNextNode(currentNode);
@@ -187,10 +186,14 @@ class doublyLinkedList{
             throw Error ('ERROR - Null Node');
         }else{
             const oldHead = this.getHead();
-
-            this.setNextNode(newNode,oldHead);
-            newNode.setPrev(null);
-            this.setPrevNode(oldHead,newNode);
+            if(oldHead === null){
+                this.head = this.tail = newNode
+            }else{
+                this.setNextNode(newNode,oldHead);
+                newNode.setPrev(null);
+                this.setPrevNode(oldHead,newNode);
+                this.head = newNode;
+            }
         }
     }
 
@@ -207,6 +210,7 @@ class doublyLinkedList{
             this.setNextNode(oldTail,newNode);
             newNode.setNext(null);
             this.setPrevNode(newNode,oldTail);
+            this.tail = newNode; 
         }
     }
 
@@ -229,6 +233,7 @@ class doublyLinkedList{
                 }
             }else if(this.hasNext(nodeToRemove)){
                 this.head = this.getNextNode(nodeToRemove);
+                this.setPrevNode(this.head , null);
             }else{
                 this.head = null;
                 this.tail = null;

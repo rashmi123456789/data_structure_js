@@ -39,48 +39,48 @@ describe('DoublyLinkedList', function() {
 
             assert.equal(doublyLinkedList.size(),1);
             const nodeToBeDeleted = doublyLinkedList.findNode(2);
-
-            console.log(doublyLinkedList.getDataItem(nodeToBeDeleted));
             doublyLinkedList.deleteNode(nodeToBeDeleted);
             assert.equal(doublyLinkedList.size(),0);
 
-            // expect(function(){
-            //     doublyLinkedList.getDataItem(doublyLinkedList.getHead())
-            // }).to.throw(Error,'ERROR - Null Node');
+            expect(function(){
+                doublyLinkedList.getDataItem(doublyLinkedList.getHead())
+            }).to.throw(Error,'ERROR - Null Node');
 
         });
     });
 
-    // describe('insertNode() - 2', function() {
-    //     it('should return length 1', function() {
-    //         const newNode = linkedList.createNewNode(3);
-    //         linkedList.insertNode(newNode);
-    //         assert.equal(linkedList.size(),1);
-    //         assert.equal(linkedList.getDataItem(linkedList.getHead()),3);
-    //     });
-    // });
+    describe('insertHead(),size() - 2', function() {
+        it('should return length 1', function() {
+            const newNode = doublyLinkedList.createNewNode(3);
+            doublyLinkedList.insertHead(newNode);
+            assert.equal(doublyLinkedList.size(),1);
+            assert.equal(doublyLinkedList.getDataItem(doublyLinkedList.getHead()),3);
+        });
+    });
 
-    // describe('printNodes()', function() {
-    //     it('should return data array', function() {
-    //         const newNode = linkedList.createNewNode(4);
-    //         linkedList.insertNode(newNode);
-    //         const newNode1 = linkedList.createNewNode(5);
-    //         linkedList.insertNode(newNode1);
-    //         assert.equal(linkedList.size(),3);
-    //         assert.deepEqual(linkedList.printNodes(),[5,4,3]);
-    //     });
-    // });
+    describe('InsertTail(),size(),printNodes()', function() {
+        it('should return data array', function() {
+            const newNode = doublyLinkedList.createNewNode(4);
+            doublyLinkedList.insertTail(newNode);
+            assert.equal(doublyLinkedList.size(),2);
+            assert.deepEqual(doublyLinkedList.printNodes(),[3,4]);
+            const newNode1 =doublyLinkedList.createNewNode(5);
+            doublyLinkedList.insertTail(newNode1);
+            const newNode2 =doublyLinkedList.createNewNode(6);
+            doublyLinkedList.insertHead(newNode2);
+            assert.equal(doublyLinkedList.size(),4);
+            assert.deepEqual(doublyLinkedList.printNodes(),[6,3,4,5]);
+        });
+    });
 
-    // describe('insertLast() and printNodes()', function() {
-    //     it('should return data array', function() {
-    //         const newNode = linkedList.createNewNode(6);
-    //         const find5 = linkedList.findNode(5);
-    //         linkedList.insertNode(newNode,find5);
-    //         const newNode1 = linkedList.createNewNode(7);
-    //         linkedList.insertLast(newNode1);
-    //         assert.equal(linkedList.size(),5);
-    //         assert.deepEqual(linkedList.printNodes(),[5,6,4,3,7]);
-    //     });
-    // });
+    describe('insertNext() and printNodes()', function() {
+        it('should return data array', function() {
+            const newNode = doublyLinkedList.createNewNode(7);
+            const find5 = doublyLinkedList.findNode(3);
+            doublyLinkedList.insertNext(newNode,find5);
+            assert.equal(doublyLinkedList.size(),5);
+            assert.deepEqual(doublyLinkedList.printNodes(),[6,3,7,4,5]);
+        });
+    });
 
 });
