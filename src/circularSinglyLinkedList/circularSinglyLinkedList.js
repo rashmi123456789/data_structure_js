@@ -1,22 +1,24 @@
-const node = require('./node');
+const node = require('../linkedList/node');
 /**
  *@author rashmi shehana
- * Linked list is a linear data structure. Items of it cannot be accessed directly.
- * Always It should start from head of the linked list and traverse. 
+ * Circular Singly Linked list is a linear data structure. Items of it cannot be accessed directly. 
  * The time compelxity is O(n) for traversing.
+ * If we are at any node in the middle of the list, this allows to access nodes that precede the given node.
+ * We only need to have a track of head in circular Singly Linked List
  */
 
-class linkedList{
+class circularSinglyLinkedList{
     
     /**
-     * Constructor of class linkedList
+     * Constructor of class circularSinglyLinkedList
      */
     constructor(data){
         this.head = new node(data);
+        this.setNextNode(this.head,this.head);
     }
 
     /**
-     * This method returns the first node of linked List
+     * This method returns the first node of  circular Singly linked List
      */
     getHead(){
         return this.head;
@@ -74,18 +76,6 @@ class linkedList{
     }
 
     /**
-     * Checks wether there is a node next to any given node
-     * @param  currentNode - current node
-     */
-    hasNext(currentNode){
-        if(currentNode !== null){
-            return currentNode.getNext() !== null;
-        }else{
-            throw Error ('ERROR - Null Node');
-        }
-    }
-
-    /**
      * This method inserts a node after current node. If current node is not given,
      * new node will be added to front as a head.
      * @param  nextNode - newly adding node
@@ -93,26 +83,40 @@ class linkedList{
      */
     insertNode(nextNode,currentNode = null){
         if(nextNode === null){
-            throw Error ('ERROR - Null Node');
+            throw Error ('ERROR - Null Node [insert Node]');
         }else{
             if(this.head == null){
                 this.head = nextNode;
+                this.setNextNode(this.head,this.head);
             }else{
-                if(currentNode == null){
+                if(currentNode === null){
+                    const tail = this.getLastNode();
                     const oldHead = this.head;
                     this.head = nextNode;
                     this.setNextNode(this.head,oldHead);
-                }else if(this.hasNext(currentNode)){
+                    this.setNextNode(tail,this.head);
+                }else if(this.getNextNode(currentNode) !== this.head){
                     const oldNextNode = this.getNextNode(currentNode);
                     this.setNextNode(currentNode,nextNode);
                     this.setNextNode(nextNode,oldNextNode);
-                }else{
+                }else if(this.getNextNode(currentNode) === this.head){
                     this.setNextNode(currentNode,nextNode);
+                    this.setNextNode(nextNode,this.head);
                 }
             }
             
         }
         
+    }
+
+    getLastNode(){
+        let temp = this.head;
+        while(this.getNextNode(temp) !== this.head){
+            temp = this.getNextNode(temp);
+        }
+        if(this.getNextNode(temp) === this.head){
+            return temp;
+        }
     }
 
     /**
@@ -126,21 +130,24 @@ class linkedList{
         
         while(found === false){
             if(this.head === nodeToRemove){
+                const tail = this.getLastNode();
                 found = true;
-                if(this.hasNext(this.head)){
-                    this.head = this.getNextNode(this.head);
+                if(this.getNextNode(this.head) !== this.head){
+                    const nextToHead = this.getNextNode(this.head);
+                    this.head = nextToHead;
+                    this.setNextNode(tail,this.head);
                 }else{
                     this.head = null;
                 }
             }else{
-                if(this.hasNext(currentNode)){
+                if(this.getNextNode(currentNode) !== this.head){
                     nextNode = this.getNextNode(currentNode);
                     if(nextNode === nodeToRemove){
                         found = true;
-                        if(this.hasNext(nextNode)){
+                        if(this.getNextNode(nextNode) !== this.head){
                             this.setNextNode(currentNode,this.getNextNode(nextNode));
                         }else{
-                            this.setNextNode(currentNode,null);
+                            this.setNextNode(currentNode,this.head);
                         }
                     }else{
                         currentNode = this.getNextNode(currentNode);
@@ -165,7 +172,7 @@ class linkedList{
                 found = true;
                 return currentNode;
             }else{
-                if(this.hasNext(currentNode)){
+                if(this.getNextNode(currentNode) !== this.head){
                     currentNode = this.getNextNode(currentNode);
                 }else{
                     throw Error ('ERROR - No Such Node.');
@@ -190,7 +197,7 @@ class linkedList{
         let count = 1;
         if(this.head !== null){
             let currentNode = this.head;
-            while(this.hasNext(currentNode)){
+            while(this.getNextNode(currentNode) !== this.head){
                 count = count + 1;
                 currentNode = this.getNextNode(currentNode);
             }
@@ -207,15 +214,8 @@ class linkedList{
         if(node == null){
             throw Error ('ERROR - Null Node.');
         }else{
-            let currentNode = this.head;
-            if(this.head !== null){
-                while(this.hasNext(currentNode) === true){
-                    currentNode = this.getNextNode(currentNode);
-                }
-                if(this.hasNext(currentNode) === false){
-                    this.insertNode(node,currentNode)
-                }
-            }
+            const tail = this.getLastNode();
+            this.insertNode(node,tail);
         }
     }
 
@@ -226,14 +226,14 @@ class linkedList{
         const dataArray = [];
         if(this.head !== null){
             let currentNode = this.head;
-            while(currentNode){
+            do{
                 dataArray.push(this.getDataItem(currentNode));
                 currentNode = this.getNextNode(currentNode);
-            }
+            }while(currentNode !== this.head );
         }
         return dataArray;
     }
 }
 
 
-module.exports = linkedList;
+module.exports = circularSinglyLinkedList;
